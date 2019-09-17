@@ -1,0 +1,16 @@
+---
+title: "Music Insight"
+author: "Cody Evans"
+output: html_notebook
+---
+
+```{r}
+library("tidyverse")
+
+pref <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/preferences-survey.csv")
+surv <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/music-survey.csv")
+
+colnames(surv[,3])
+colnames(surv)[colnames(surv) == "What is your pseudonym?"] <- "name"
+
+```
