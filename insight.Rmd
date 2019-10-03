@@ -43,7 +43,11 @@ people <- tibble(generator = surv$generator, name = surv$name, sex = surv$sex, m
 
 song_list <- tibble(song_artist = surv$song_artist, song = surv$song, link = surv$link, name = surv$name)
 
-#ratings <- (persName = pref$name, songName = surv$song, rating = #something#)
+tempPref <- pref[2:45]
+
+temp <- gather(tempPref, key = "song_name", value = "rating", -name)
+
+ratings <- tibble(persName = temp$name, songName = temp$song_name, rating = temp$rating)
 
 people$time <- as.POSIXlt(parse_datetime(people$time, format = "%D %H:%M"))
 
@@ -69,7 +73,5 @@ detach("package:pracma", unload=TRUE)
 people$major <- as.factor(people$major)
 
 levels(people$major)
-
-temp <- gather(tempPref, key = "song_name", value = "rating", -name)
 
 ```
