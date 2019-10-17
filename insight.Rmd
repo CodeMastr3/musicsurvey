@@ -1,12 +1,17 @@
 ---
 title: "Music Insight"
 author: "Cody Evans"
-output: html_notebook
+output:
+  pdf_document: default
+  html_notebook: default
+  html_document:
+    df_print: paged
 ---
 
-Importing data
+## Importing data
 
 ```{r}
+## install.packages('tidyverse')
 suppressMessages(library("tidyverse"))
 
 suppressMessages(surv <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/music-survey.csv"))
@@ -16,7 +21,7 @@ N <- nrow(surv)
 
 ```
 
-Changing column names for better understanding
+## Changing column names for better understanding
 
 ```{r}
 colnames(surv)[colnames(surv) == "Timestamp"] <- "time_sub"
@@ -36,7 +41,7 @@ colnames(surv)
 
 ```
 
-## Making some Tibbles
+## Making some Nice Tibbles
 
 ```{r}
 people <- tibble(generator = surv$generator, name = surv$name, sex = surv$sex, major = surv$major, grade_level = surv$grade_level, year_born = surv$year_born, instrument = surv$instrument, time = surv$time_sub)
@@ -75,3 +80,24 @@ people$major <- as.factor(people$major)
 levels(people$major)
 
 ```
+
+## Making a simple graph
+
+```{r fig.height=15, fig.width=20}
+
+ratings$songName <- as.factor(ratings$songName)
+
+##install.packages("wesanderson")
+suppressMesslibrary(wesanderson)
+bp+scale_fill_manual(values=wes_palette(n=3, name="GrandBudapest"))
+
+
+(p <- ggplot(data = ratings, aes(songName, rating, colour = factor(songName))) + geom_count() + theme(axis.text.x = element_text(angle = 90)))
+
+(p2 <- ggplot(ratings, aes(persName, rating, colour = factor(as.factor(persName)))) + geom_count() + theme(axis.text.x = element_text(angle = 90)))
+
+(p3 <- ggplot(ratings, aes(persName, rating)) + geom_line() + theme(axis.text.x = element_text(angle = 90)))
+
+```
+
+## The graphs
