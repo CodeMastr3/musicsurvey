@@ -87,11 +87,6 @@ levels(people$major)
 
 ratings$songName <- as.factor(ratings$songName)
 
-##install.packages("wesanderson")
-suppressMesslibrary(wesanderson)
-bp+scale_fill_manual(values=wes_palette(n=3, name="GrandBudapest"))
-
-
 (p <- ggplot(data = ratings, aes(songName, rating, colour = factor(songName))) + geom_count() + theme(axis.text.x = element_text(angle = 90)))
 
 (p2 <- ggplot(ratings, aes(persName, rating, colour = factor(as.factor(persName)))) + geom_count() + theme(axis.text.x = element_text(angle = 90)))
@@ -101,3 +96,15 @@ bp+scale_fill_manual(values=wes_palette(n=3, name="GrandBudapest"))
 ```
 
 ## The graphs
+
+```{r}
+# Where song_name from ratings = song_name from people and persName from ratings = persName from people inner_join(ratings, people, by = song_name)
+songs <- paste(surv$song_artist, surv$song, sep = "\t")
+
+temp <- tibble(songName = songs, persName = surv$name)
+joined <- dplyr::inner_join(ratings, temp, by = c("persName", "songName"))
+
+notjoined <- dplyr::anti_join(temp, ratings, by = c("persName", "songName"))
+
+mean(joined$rating)
+```

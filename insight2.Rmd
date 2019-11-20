@@ -1,0 +1,42 @@
+---
+title: "music p2"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+library("tidyverse")
+library("knitr")
+setwd("/mnt/storage/stuff/Rstudio/385/musicsurvey/")
+purl("insight.Rmd", output = "part1.r")
+source("part1.r")
+```
+
+
+```{r}
+
+average <- function(name) {
+  I <- nrow(name)
+  X <- ncol(name) - 2
+  sum <- 0
+
+  averagesVec <- c()
+
+  for(i in I) {
+    for(x in X) {#From 3 to the end
+      sum <- sum + name[i, x +2]
+    }
+    averagesVec <- c(averagesVec, sum/X)
+    sum <- 0
+  }
+
+  return(averagesVec)
+}
+
+test <- average(pref)
+
+#for(i in I) { # I for height
+#  append(averagesVec, average(pref), after = length(averagesVec))
+#}
+
+averageTib <- averageTib$averageVec
+```
